@@ -54,7 +54,7 @@ public class UsuarioService {
 
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Usuário não encontrado."));
+                .orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
     }
 
     public List<Usuario> listarUsuarios() {
@@ -64,7 +64,7 @@ public class UsuarioService {
     private void validarDuplicidadeUsername(String username) {
         Optional<Usuario> usuarioExistente = usuarioRepository.findByUsername(username);
         if (usuarioExistente.isPresent()) {
-            throw new RegraNegocioException("Nome de usuário já cadastrado.");
+            throw new RegraNegocioException("Nome de usuário já cadastrado");
         }
     }
 

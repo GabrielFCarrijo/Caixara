@@ -1,6 +1,10 @@
 package com.caixara.caixaraMoveis.pedido.service;
 
 import com.caixara.caixaraMoveis.exception.RegraNegocioException;
+import com.caixara.caixaraMoveis.pagamento.entity.Pagamento;
+import com.caixara.caixaraMoveis.pagamento.entity.enums.TipoPagamento;
+import com.caixara.caixaraMoveis.pagamento.service.PagamentoService;
+import com.caixara.caixaraMoveis.pagamento.service.ProcessamentoDePagamentoService;
 import com.caixara.caixaraMoveis.pedido.entity.ItemPedido;
 import com.caixara.caixaraMoveis.pedido.entity.Pedido;
 import com.caixara.caixaraMoveis.pedido.entity.dto.ItemPedidoDTO;
@@ -9,27 +13,34 @@ import com.caixara.caixaraMoveis.pedido.repository.PedidoRepository;
 import com.caixara.caixaraMoveis.produto.entity.Produto;
 import com.caixara.caixaraMoveis.produto.repository.ProdutoRepository;
 import com.caixara.caixaraMoveis.produto.service.ProdutoService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PedidoService {
 
+
     private final PedidoRepository pedidoRepository;
     private final ProdutoRepository produtoRepository;
     private final ProdutoService produtoService;
-    public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, ProdutoService produtoService) {
+
+    @Lazy
+    private final ProcessamentoDePagamentoService processamentoDePagamentoService;
+
+    public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, ProdutoService produtoService, PagamentoService pagamentoService, ProcessamentoDePagamentoService processamentoDePagamentoService) {
         this.pedidoRepository = pedidoRepository;
         this.produtoRepository = produtoRepository;
         this.produtoService = produtoService;
+        this.processamentoDePagamentoService = processamentoDePagamentoService;
     }
 
     @Transactional
-    public Pedido criarPedido(Pedido pedido, List<ItemPedidoDTO> itensDTO) {
+    public Pedido criarPedido(Pedido pedido, List<ItemPedidoDTO> itensDTO, TipoPagamento tipoPagamento, Double valorPagamento, Integer numeroParcelas) {
         List<ItemPedido> itens = itensDTO.stream().map(dto -> {
             Produto produto = produtoRepository.findById(dto.getProdutoId())
                     .orElseThrow(() -> new RegraNegocioException("Produto não encontrado com o ID: " + dto.getProdutoId()));
@@ -37,23 +48,50 @@ public class PedidoService {
             ItemPedido item = new ItemPedido();
             item.setProduto(produto);
             item.setQuantidade(dto.getQuantidade());
-
-            Double precoUnitario = produto.getPreco();
-            item.setPrecoUnitario(precoUnitario);
-
-            Double precoTotal = precoUnitario * dto.getQuantidade();
-            item.setPrecoTotal(precoTotal);
-
+            item.setPrecoUnitario(produto.getPreco());
+            item.setPrecoTotal(produto.getPreco() * dto.getQuantidade());
             item.setPedido(pedido);
             return item;
         }).toList();
 
-        pedido.setItens(itens);
-        calcularTotalPedido(pedido);
-        pedido.setStatus(StatusPedido.PENDENTE);
-        pedido.setDataCriacao(LocalDateTime.now());
-        return pedidoRepository.save(pedido);
+        if (pedido.getItens() == null) {
+            pedido.setItens(new ArrayList<>());
+        }
+
+        pedido.getItens().addAll(itens);
+
+        double totalPedido = itens.stream().mapToDouble(ItemPedido::getPrecoTotal).sum();
+        pedido.setTotal(totalPedido);
+
+        if (pedido.getPagamentos() == null) {
+            pedido.setPagamentos(new ArrayList<Pagamento>());
+        }
+
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+
+        if (valorPagamento > totalPedido) {
+            throw new RegraNegocioException("O valor do pagamento não pode ser superior ao total do pedido");
+        }
+
+        if (numeroParcelas == null || numeroParcelas <= 0) {
+            numeroParcelas = 1;
+        }
+
+        Double valorParcela = totalPedido / numeroParcelas;
+
+        List<Pagamento> pagamentos = processamentoDePagamentoService.processarPagamento(pedidoSalvo.getId(), tipoPagamento, valorPagamento, numeroParcelas);
+
+        for (Pagamento pagamento : pagamentos) {
+            pagamento.setNumeroParcelas(numeroParcelas);
+            pagamento.setValorParcela(valorParcela);
+
+            pagamento.setPedido(pedidoSalvo);
+            pedidoSalvo.getPagamentos().add(pagamento);
+        }
+
+        return pedidoSalvo;
     }
+
 
     public Pedido buscarPorId(Long id) {
         return pedidoRepository.findById(id)

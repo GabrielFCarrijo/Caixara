@@ -68,13 +68,13 @@ public class ProdutoService {
 
     private void validarProduto(Produto produto) {
         if (produto.getNome() == null || produto.getNome().isBlank()) {
-            throw new RegraNegocioException("O nome do produto é obrigatório.");
+            throw new RegraNegocioException("O nome do produto é obrigatório");
         }
         if (produto.getPreco() == null || produto.getPreco().compareTo(0.0) <= 0) {
-            throw new RegraNegocioException("O preço do produto deve ser maior que zero.");
+            throw new RegraNegocioException("O preço do produto deve ser maior que zero");
         }
         if (produto.getQuantidade() == null || produto.getQuantidade() < 0) {
-            throw new RegraNegocioException("A quantidade do produto não pode ser negativa.");
+            throw new RegraNegocioException("A quantidade do produto não pode ser negativa");
         }
     }
 }

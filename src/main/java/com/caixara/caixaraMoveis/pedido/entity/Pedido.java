@@ -1,5 +1,6 @@
 package com.caixara.caixaraMoveis.pedido.entity;
 
+import com.caixara.caixaraMoveis.pagamento.entity.Pagamento;
 import com.caixara.caixaraMoveis.pedido.entity.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,6 +37,9 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.PERSIST)
     private List<ItemPedido> itens = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<Pagamento> pagamentos;
 
     public Long getId() {
         return id;
@@ -83,5 +87,13 @@ public class Pedido {
 
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
+    }
+
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
     }
 }

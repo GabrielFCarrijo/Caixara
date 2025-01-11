@@ -1,5 +1,6 @@
 package com.caixara.caixaraMoveis.pedido.entity.dto;
 
+import com.caixara.caixaraMoveis.pagamento.entity.enums.TipoPagamento;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,9 @@ public class PedidoDTO {
     private String status;
     private LocalDateTime dataCriacao;
     private List<ItemPedidoDTO> itens;
+    private TipoPagamento tipoPagamento;
+    private Double valorPagamento;
+    private Integer numeroParcelas;
 
     public Long getClienteId() {
         return clienteId;
@@ -46,5 +50,29 @@ public class PedidoDTO {
 
     public void setItens(List<ItemPedidoDTO> itens) {
         this.itens = itens;
+    }
+
+    public TipoPagamento getTipoPagamento() {
+        return tipoPagamento;
+    }
+
+    public void setTipoPagamento(TipoPagamento tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
+    }
+
+    public Double getValorPagamento() {
+        return valorPagamento;
+    }
+
+    public void setValorPagamento(Double valorPagamento) {
+        this.valorPagamento = valorPagamento;
+    }
+
+    public Integer getNumeroParcelas() {
+        return numeroParcelas;
+    }
+
+    public void setNumeroParcelas(Integer numeroParcelas) {
+        this.numeroParcelas = numeroParcelas;
     }
 }

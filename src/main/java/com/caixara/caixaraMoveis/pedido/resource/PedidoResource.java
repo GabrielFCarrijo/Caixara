@@ -1,5 +1,6 @@
 package com.caixara.caixaraMoveis.pedido.resource;
 
+import com.caixara.caixaraMoveis.pagamento.entity.enums.TipoPagamento;
 import com.caixara.caixaraMoveis.pedido.entity.Pedido;
 import com.caixara.caixaraMoveis.pedido.entity.dto.PedidoDTO;
 import com.caixara.caixaraMoveis.pedido.entity.enums.StatusPedido;
@@ -37,7 +38,7 @@ public class PedidoResource {
         pedido.setStatus(StatusPedido.valueOf(pedidoDTO.getStatus()));
         pedido.setDataCriacao(pedidoDTO.getDataCriacao());
 
-        Pedido novoPedido = pedidoService.criarPedido(pedido, pedidoDTO.getItens());
+        Pedido novoPedido = pedidoService.criarPedido(pedido, pedidoDTO.getItens(), pedidoDTO.getTipoPagamento(),pedidoDTO.getValorPagamento(), pedidoDTO.getNumeroParcelas());
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
     }
 
