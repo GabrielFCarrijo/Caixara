@@ -4,7 +4,6 @@ import com.caixara.caixaraMoveis.pedido.entity.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class Pedido {
     private StatusPedido status;
 
     @Column(nullable = false)
-    private BigDecimal total = BigDecimal.ZERO;
+    private Double total;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.PERSIST)
     private List<ItemPedido> itens = new ArrayList<>();
@@ -70,11 +69,11 @@ public class Pedido {
         this.status = status;
     }
 
-    public BigDecimal getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 

@@ -28,6 +28,9 @@ public class Produto {
     @Column(nullable = false)
     private String categoria;
 
+    @Column
+    private Integer quantidade = 0;
+
     public Long getId() {
         return id;
     }
@@ -66,5 +69,13 @@ public class Produto {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

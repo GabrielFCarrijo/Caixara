@@ -1,6 +1,7 @@
 package com.caixara.caixaraMoveis.pedido.resource;
 
 import com.caixara.caixaraMoveis.pedido.entity.Pedido;
+import com.caixara.caixaraMoveis.pedido.entity.dto.PedidoDTO;
 import com.caixara.caixaraMoveis.pedido.entity.enums.StatusPedido;
 import com.caixara.caixaraMoveis.pedido.service.PedidoService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,8 +31,13 @@ public class PedidoResource {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> criarPedido(@RequestBody Pedido pedido) {
-        Pedido novoPedido = pedidoService.criarPedido(pedido);
+    public ResponseEntity<Pedido> criarPedido(@RequestBody PedidoDTO pedidoDTO) {
+        Pedido pedido = new Pedido();
+        pedido.setClienteId(pedidoDTO.getClienteId());
+        pedido.setStatus(StatusPedido.valueOf(pedidoDTO.getStatus()));
+        pedido.setDataCriacao(pedidoDTO.getDataCriacao());
+
+        Pedido novoPedido = pedidoService.criarPedido(pedido, pedidoDTO.getItens());
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
     }
 
@@ -46,7 +52,7 @@ public class PedidoResource {
             @RequestParam(required = false) StatusPedido status,
             @RequestParam(required = false) LocalDateTime inicio,
             @RequestParam(required = false) LocalDateTime fim,
-            @RequestParam(required = false) BigDecimal minimo) {
+            @RequestParam(required = false) Double minimo) {
         List<Pedido> pedidos = pedidoService.listarPedidos(status, inicio, fim, minimo);
         return ResponseEntity.ok(pedidos);
     }
@@ -94,7 +100,6 @@ public class PedidoResource {
             row.createCell(4).setCellValue(pedido.getTotal().toString());
         }
 
-        // Configura o cabeçalho para download
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=relatorio_pedidos.xlsx");
 

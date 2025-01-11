@@ -17,4 +17,14 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     @Query("select p from Produto p where p.preco between :minPreco and :maxPreco")
     List<Produto> findByPrecoRange(@Param("minPreco") BigDecimal minPreco, @Param("maxPreco") BigDecimal maxPreco);
+
+    @Query("select p from Produto p where " +
+            "(:nome is null or lower(p.nome) like lower(concat('%', :nome, '%'))) and " +
+            "(:categoria is null or p.categoria = :categoria) and " +
+            "(:precoMinimo is null or p.preco >= :precoMinimo) and " +
+            "(:precoMaximo is null or p.preco <= :precoMaximo)")
+    List<Produto> listarComFiltros(@Param("nome") String nome,
+                                   @Param("categoria") String categoria,
+                                   @Param("precoMinimo") BigDecimal precoMinimo,
+                                   @Param("precoMaximo") BigDecimal precoMaximo);
 }

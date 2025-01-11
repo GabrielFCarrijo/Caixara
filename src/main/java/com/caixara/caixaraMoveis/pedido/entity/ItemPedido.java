@@ -1,10 +1,9 @@
 package com.caixara.caixaraMoveis.pedido.entity;
 
 import com.caixara.caixaraMoveis.produto.entity.Produto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "itens_pedido")
@@ -21,6 +20,7 @@ public class ItemPedido {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false)
+    @JsonIgnore
     private Pedido pedido;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,10 +31,10 @@ public class ItemPedido {
     private Integer quantidade;
 
     @Column(nullable = false)
-    private BigDecimal precoUnitario;
+    private Double precoUnitario;
 
     @Column(nullable = false)
-    private BigDecimal precoTotal;
+    private Double precoTotal;
 
     public Long getId() {
         return id;
@@ -68,19 +68,19 @@ public class ItemPedido {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getPrecoUnitario() {
+    public Double getPrecoUnitario() {
         return precoUnitario;
     }
 
-    public void setPrecoUnitario(BigDecimal precoUnitario) {
+    public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
     }
 
-    public BigDecimal getPrecoTotal() {
+    public Double getPrecoTotal() {
         return precoTotal;
     }
 
-    public void setPrecoTotal(BigDecimal precoTotal) {
+    public void setPrecoTotal(Double precoTotal) {
         this.precoTotal = precoTotal;
     }
 }

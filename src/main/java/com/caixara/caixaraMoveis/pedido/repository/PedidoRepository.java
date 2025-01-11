@@ -23,7 +23,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> listarComFiltros(@Param("status") StatusPedido status,
                                   @Param("dataInicio") LocalDateTime dataInicio,
                                   @Param("dataFim") LocalDateTime dataFim,
-                                  @Param("valorMinimo") BigDecimal valorMinimo);
+                                  @Param("valorMinimo") Double valorMinimo);
 
     @Query("select p from Pedido p where " +
             "p.dataCriacao between :dataInicio and :dataFim and " +
