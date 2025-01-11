@@ -1,4 +1,4 @@
-package com.caixara.caixaraMoveis.usuario.security;
+package com.caixara.caixaraMoveis.security;
 
 import com.caixara.caixaraMoveis.usuario.entity.Usuario;
 import com.caixara.caixaraMoveis.usuario.repository.UsuarioRepository;
