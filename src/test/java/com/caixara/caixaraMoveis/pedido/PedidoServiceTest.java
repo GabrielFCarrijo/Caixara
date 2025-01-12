@@ -61,9 +61,7 @@ class PedidoServiceTest {
         produto.setPreco(100.0);
         produto.setQuantidade(10);
 
-        itemPedidoDTO = new ItemPedidoDTO();
-        itemPedidoDTO.setProdutoId(produto.getId());
-        itemPedidoDTO.setQuantidade(2);
+        itemPedidoDTO = new ItemPedidoDTO(produto.getId(), 2, produto.getPreco(), produto.getPreco() * 2);
     }
 
     @Test

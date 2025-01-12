@@ -21,9 +21,6 @@ public class ItemPedidoDTO {
         this.precoTotal = valorTotal;
     }
 
-    public ItemPedidoDTO() {
-    }
-
     public Long getProdutoId() {
         return produtoId;
     }
