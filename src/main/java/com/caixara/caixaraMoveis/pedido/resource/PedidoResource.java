@@ -83,33 +83,9 @@ public class PedidoResource {
 
         List<Pedido> relatorio = pedidoService.gerarRelatorio(dataInicio, dataFim, status);
 
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Relatório de Pedidos");
-
-        String[] headers = {"ID", "Cliente", "Status", "Data Criação", "Total"};
-        Row headerRow = sheet.createRow(0);
-        for (int i = 0; i < headers.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(headers[i]);
-        }
-
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-        int rowNum = 1;
-        for (Pedido pedido : relatorio) {
-            Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(pedido.getId());
-            row.createCell(1).setCellValue(pedido.getClienteId());
-            row.createCell(2).setCellValue(pedido.getStatus().toString());
-            row.createCell(3).setCellValue(pedido.getDataCriacao().format(dateFormatter));
-            row.createCell(4).setCellValue(pedido.getTotal().toString());
-        }
-
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=relatorio_pedidos.xlsx");
-
-        workbook.write(response.getOutputStream());
-        workbook.close();
+        PedidoService.geradorRelatorio(response, relatorio);
     }
+
+
 }
 
