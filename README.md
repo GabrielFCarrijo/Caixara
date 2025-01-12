@@ -47,6 +47,9 @@ O **Caixara Móveis** tem como objetivo principal fornecer uma solução robusta
 
 4. **Relatórios**
    - Geração de relatórios filtrados por período, status e valor mínimo.
+  
+5. **Swagger**
+   - http://localhost:8080/swagger-ui/index.html#/
      
 ## Como Executar o Projeto
    Lembrando que para conseguir executar o projeto basta abrir o Docker desktop por conta que quando voce executar o projeto ele ira subir um container de PostgresSQL e criar todos as tabelas e relacionamentos necessarios
