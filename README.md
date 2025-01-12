@@ -51,7 +51,7 @@ O **Caixara Móveis** tem como objetivo principal fornecer uma solução robusta
 
 1. Clone o repositório:
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   git clone https://github.com/GabrielFCarrijo/Caixara.git
    ```
 2. Entre no diretório do projeto:
    ```bash
