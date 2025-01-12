@@ -21,3 +21,12 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn package
+  deploy:
+    name: Deploy Caixara
+    runs-on: ubuntu-latest
+    environment: Caixara
+    needs: [build]
+    steps:
+
+    - name: Caixara
+      run: echo 'Deploy Caixara'
