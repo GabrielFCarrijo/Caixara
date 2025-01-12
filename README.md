@@ -1,6 +1,6 @@
 # Caixara Móveis
 
-Bem-vindo ao **Caixara Móveis**, um microserviço desenvolvido para gerenciar as operações de uma loja imobiliária. Este projeto foi construído com foco em escalabilidade e boas práticas, e inclui funcionalidades essenciais para o gerenciamento de pedidos, produtos, pagamentos e muito mais.
+**Caixara Móveis**, um microserviço desenvolvido para gerenciar as operações de uma loja imobiliária. Este projeto foi construído com foco em escalabilidade e boas práticas, e inclui funcionalidades essenciais para o gerenciamento de pedidos, produtos, pagamentos a baixo tem mais especificaçõoes do projeto
 
 ## Melhorias
 Fazendo o projeto faltou tempo para que eu conseguisse desenvolver alguns pontos:
@@ -29,6 +29,7 @@ O **Caixara Móveis** tem como objetivo principal fornecer uma solução robusta
 - **Maven**: Gerenciamento de dependências.
 - **JUnit**: Testes unitários para validação do sistema.
 - **Mockito**: Mocking nas camadas de teste.
+- **Docker**: Geração do container do PostgresSQL.
 
 ## Funcionalidades Implementadas
 
