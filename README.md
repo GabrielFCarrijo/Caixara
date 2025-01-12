@@ -19,6 +19,34 @@ O **Caixara Móveis** tem como objetivo principal fornecer uma solução robusta
 - **Pagamentos**: Processamento de pagamentos com suporte a diferentes tipos de pagamento (ex.: cartão de crédito, boleto).
 - **Relatórios**: Geração de relatórios com filtros como período, status e valor mínimo.
 
+## Níveis de Acesso
+
+Os níveis de acesso no Caixara Móveis foram definidos para garantir segurança e controle sobre as operações realizadas. Sendo assim os níveis e suas permissões sao:
+
+    ADMIN
+        Acesso total a todos os recursos.
+        Pode gerenciar usuários, produtos, pedidos, pagamentos e relatórios.
+        Endpoints disponíveis:
+            /api/admin/**
+            /api/operador/**
+            /api/cliente/**
+
+    OPERADOR
+        Acesso a recursos operacionais, como gerenciamento de produtos e pedidos.
+        Endpoints disponíveis:
+            /api/operador/**
+
+    CLIENTE
+        Acesso limitado a informações relacionadas ao próprio cliente.
+        Pode visualizar pedidos e informações associadas.
+        Endpoints disponíveis:
+            /api/cliente/**
+
+### Configuração de Segurança
+
+A autenticação e autorização são gerenciadas através do Spring Security. Os roles utilizados no sistema incluem prefixos como ROLE_ADMIN, ROLE_OPERADOR e ROLE_CLIENTE.
+A criacao dos usuarios ja vem com a sua role definindo assim suas permissoes.
+
 ## Tecnologias Utilizadas
 
 - **Java**: Linguagem principal do projeto.
