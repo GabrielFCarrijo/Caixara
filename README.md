@@ -2,6 +2,14 @@
 
 Bem-vindo ao **Caixara Móveis**, um microserviço desenvolvido para gerenciar as operações de uma loja imobiliária. Este projeto foi construído com foco em escalabilidade e boas práticas, e inclui funcionalidades essenciais para o gerenciamento de pedidos, produtos, pagamentos e muito mais.
 
+## Melhorias
+Fazendo o projeto faltou tempo para que eu conseguisse desenvolver alguns pontos:
+   - Mensageria: na parte dos pagamentos tenho a ideia de implementar mensageria sendo assim o quando mudasse status do pagamento enviasse uma notificacao disparada por mensageria
+   - Relatorios: questão dos relatorios penso em colocar um relatorio mais customizado para conseguir futamente fazer importacao e exportação
+   - Inserção Massivo: inserir produtos de forma massiva as vezes ate com xlsx
+   - Deploy em servidor: fiz a configuracao do job do deploy porem nao subi em nenhum servidor ia colocar no hamashi porem ele virou pago mais faltou apenas configurar e colocar as credencias para o deploy ir para algum servidor
+   - API de pagamento: pensei em fazer integração do pagamento porem como era algo mais extenso e eu nao tinha tanto tempo fiz manualmente no projeto mais a ideia era consumir uma API
+
 ## Objetivo do Projeto
 
 O **Caixara Móveis** tem como objetivo principal fornecer uma solução robusta e eficiente para gerenciar:
@@ -39,16 +47,9 @@ O **Caixara Móveis** tem como objetivo principal fornecer uma solução robusta
 
 4. **Relatórios**
    - Geração de relatórios filtrados por período, status e valor mínimo.
-
-## Pontos de Melhoria
-
-- **Autenticação e Autorização**: Implementar autenticação JWT para segurança nas operações.
-- **Validações Avançadas**: Adicionar mais regras de negócios, como controle de devoluções.
-- **Melhorias na Interface de API**: Expandir a documentação com Swagger.
-- **Escalabilidade**: Configuração de balanceamento de carga e integração com sistemas de filas (ex.: RabbitMQ).
-
+     
 ## Como Executar o Projeto
-
+   Lembrando que para conseguir executar o projeto basta abrir o Docker desktop por conta que quando voce executar o projeto ele ira subir um container de PostgresSQL e criar todos as tabelas e relacionamentos necessarios
 1. Clone o repositório:
    ```bash
    git clone https://github.com/GabrielFCarrijo/Caixara.git
@@ -68,9 +69,9 @@ O **Caixara Móveis** tem como objetivo principal fornecer uma solução robusta
 
 5. Acesse a API:
    - URL base: `http://localhost:8080`
-
-## Testes
-
-Para executar os testes unitários:
+     
+6. Endipoints para acesso:
+Para facilitar os testes segue a coleção do postman é so fazer o import e voces conseguirao ver com os body prontos:
 ```bash
-mvn test
+https://drive.google.com/file/d/1QrLnkIVJIjsFSsayM34cd94A2CGnsKd_/view?usp=sharing
+```
