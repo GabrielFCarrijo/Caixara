@@ -25,6 +25,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
             "(:precoMaximo is null or p.preco <= :precoMaximo)")
     List<Produto> listarComFiltros(@Param("nome") String nome,
                                    @Param("categoria") String categoria,
-                                   @Param("precoMinimo") BigDecimal precoMinimo,
-                                   @Param("precoMaximo") BigDecimal precoMaximo);
+                                   @Param("precoMinimo") Double precoMinimo,
+                                   @Param("precoMaximo") Double precoMaximo);
 }

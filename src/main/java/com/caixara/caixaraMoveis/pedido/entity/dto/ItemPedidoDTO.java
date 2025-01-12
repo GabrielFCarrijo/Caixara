@@ -7,13 +7,22 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ItemPedidoDTO {
     private Long produtoId;
     private Integer quantidade;
     private Double precoUnitario;
     private Double precoTotal;
+
+    public ItemPedidoDTO(Long produtoId, Integer quantidade, Double valorUnitario, Double valorTotal) {
+        this.produtoId = produtoId;
+        this.quantidade = quantidade;
+        this.precoUnitario = valorUnitario;
+        this.precoTotal = valorTotal;
+    }
+
+    public ItemPedidoDTO() {
+    }
 
     public Long getProdutoId() {
         return produtoId;

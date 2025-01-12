@@ -46,8 +46,8 @@ public class ProdutoResource {
     public ResponseEntity<List<Produto>> listarProdutos(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String categoria,
-            @RequestParam(required = false) BigDecimal precoMinimo,
-            @RequestParam(required = false) BigDecimal precoMaximo
+            @RequestParam(required = false) Double precoMinimo,
+            @RequestParam(required = false) Double precoMaximo
     ) {
         List<Produto> produtos = produtoService.listarProdutos(nome, categoria, precoMinimo, precoMaximo);
         return ResponseEntity.ok(produtos);

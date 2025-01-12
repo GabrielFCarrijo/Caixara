@@ -62,7 +62,7 @@ public class ProdutoService {
         produtoRepository.delete(produto);
     }
 
-    public List<Produto> listarProdutos(String nome, String categoria, BigDecimal precoMinimo, BigDecimal precoMaximo) {
+    public List<Produto> listarProdutos(String nome, String categoria, Double precoMinimo, Double precoMaximo) {
         return produtoRepository.listarComFiltros(nome, categoria, precoMinimo, precoMaximo);
     }
 
