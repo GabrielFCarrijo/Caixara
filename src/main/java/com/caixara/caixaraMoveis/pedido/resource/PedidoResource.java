@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class PedidoResource {
         this.pedidoService = pedidoService;
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERADOR')")
     @PostMapping
     public ResponseEntity<Pedido> criarPedido(@RequestBody PedidoDTO pedidoDTO) {
         Pedido pedido = new Pedido();
@@ -38,7 +40,7 @@ public class PedidoResource {
         pedido.setStatus(StatusPedido.valueOf(pedidoDTO.getStatus()));
         pedido.setDataCriacao(pedidoDTO.getDataCriacao());
 
-        Pedido novoPedido = pedidoService.criarPedido(pedido, pedidoDTO.getItens(), pedidoDTO.getTipoPagamento(),pedidoDTO.getValorPagamento(), pedidoDTO.getNumeroParcelas());
+        Pedido novoPedido = pedidoService.criarPedido(pedido, pedidoDTO.getItens(), pedidoDTO.getTipoPagamento(), pedidoDTO.getValorPagamento(), pedidoDTO.getNumeroParcelas());
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
     }
 
@@ -58,12 +60,14 @@ public class PedidoResource {
         return ResponseEntity.ok(pedidos);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERADOR')")
     @PutMapping("/{id}")
     public ResponseEntity<Pedido> atualizarPedido(@PathVariable Long id, @RequestBody Pedido pedidoAtualizado) {
         Pedido pedidoAtualizadoResponse = pedidoService.atualizarPedido(id, pedidoAtualizado);
         return ResponseEntity.ok(pedidoAtualizadoResponse);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirPedido(@PathVariable Long id) {
         pedidoService.deletarPedido(id);
@@ -108,3 +112,4 @@ public class PedidoResource {
         workbook.close();
     }
 }
+

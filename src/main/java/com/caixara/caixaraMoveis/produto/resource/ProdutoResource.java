@@ -3,6 +3,7 @@ package com.caixara.caixaraMoveis.produto.resource;
 import com.caixara.caixaraMoveis.produto.entity.Produto;
 import com.caixara.caixaraMoveis.produto.service.ProdutoService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class ProdutoResource {
         this.produtoService = produtoService;
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERADOR')")
     @PostMapping
     public ResponseEntity<Produto> criarProduto(@RequestBody Produto produto) {
         Produto produtoCriado = produtoService.criarProduto(produto);
@@ -30,12 +32,14 @@ public class ProdutoResource {
         return ResponseEntity.ok(produto);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERADOR')")
     @PutMapping("/{id}")
     public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
         Produto produtoAtualizadoResponse = produtoService.atualizarProduto(id, produtoAtualizado);
         return ResponseEntity.ok(produtoAtualizadoResponse);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
         produtoService.deletarProduto(id);
