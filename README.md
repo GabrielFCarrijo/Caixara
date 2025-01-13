@@ -1,3 +1,7 @@
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/d64e5ad5-f6d0-4e31-9a46-6722f81759a8" />
+</div>
+
 # Caixara Móveis
 
 **Caixara Móveis**, um microserviço desenvolvido para gerenciar as operações de uma loja imobiliária. Este projeto foi construído com foco em escalabilidade e boas práticas, e inclui funcionalidades essenciais para o gerenciamento de pedidos, produtos, pagamentos a baixo tem mais especificaçõoes do projeto
